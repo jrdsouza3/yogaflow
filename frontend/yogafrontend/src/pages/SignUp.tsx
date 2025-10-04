@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import './Auth.css';
 
 const SignUp: React.FC = () => {
@@ -12,6 +13,9 @@ const SignUp: React.FC = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  
+  const { signup } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -39,14 +43,19 @@ const SignUp: React.FC = () => {
     }
 
     try {
-      // TODO: Implement actual signup logic
-      console.log('Signup attempt:', formData);
+      const result = await signup({
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName
+      });
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For now, just redirect to home
-      window.location.href = '/';
+      if (result.success) {
+        // Redirect to login page on successful signup
+        navigate('/login');
+      } else {
+        setError(result.message);
+      }
     } catch (err) {
       setError('Signup failed. Please try again.');
     } finally {
