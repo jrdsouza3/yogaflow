@@ -50,6 +50,10 @@ npm start
 ```bash
 cd backend
 ```
+2. Enter virtual environment and pip install
+```bash
+flask run
+```
 
 2. Follow the backend-specific setup instructions in the backend directory
 
@@ -59,5 +63,3 @@ cd backend
 - `npm build` - Builds the app for production
 - `npm test` - Launches the test runner
 - `npm run eject` - Ejects from Create React App (one-way operation)
-
-**Happy practicing! 🧘‍♀️✨**
