@@ -13,8 +13,12 @@ yogaflow/
 └── README.md
 ```
 
-## Features
+##Features TODO
+- **Session Timer**: Built-in timer for timed practices and meditation
+- **Saving of Flows** - allow each user to save their flows and access them again
+- **Image provider** - use web scraping to generate images to go along with flows, use relational DB to store, store list of non scraped flows and execute lambda to scrape each day to get image of non held poses
 
+## Features when complete
 - **Custom Routines**: Create and save personalized yoga sequences
 - **Session Timer**: Built-in timer for timed practices and meditation
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
