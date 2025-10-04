@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import apiService from '../services/api';
 import './FlowGenerator.css';
 
 interface FlowFormData {
@@ -16,6 +17,8 @@ const FlowGenerator: React.FC = () => {
     desiredPoses: ''
   });
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedFlow, setGeneratedFlow] = useState<any>(null);
+  const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -27,18 +30,19 @@ const FlowGenerator: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsGenerating(true);
+    setError('');
+    setGeneratedFlow(null);
 
     try {
-      // TODO: Implement actual flow generation logic
-      console.log('Generating flow with data:', formData);
+      const response = await apiService.generateFlow(formData);
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // For now, just show success message
-      alert('Flow generated successfully! (This is a placeholder)');
+      if (response.success) {
+        setGeneratedFlow(response);
+      } else {
+        setError(response.message || 'Failed to generate flow');
+      }
     } catch (error) {
-      alert('Failed to generate flow. Please try again.');
+      setError('Failed to generate flow. Please try again.');
     } finally {
       setIsGenerating(false);
     }
@@ -139,6 +143,12 @@ const FlowGenerator: React.FC = () => {
                 )}
               </button>
             </div>
+
+            {error && (
+              <div className="error-message">
+                {error}
+              </div>
+            )}
           </form>
 
           <div className="flow-preview">
@@ -157,6 +167,55 @@ const FlowGenerator: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Generated Flow Display */}
+        {generatedFlow && (
+          <div className="generated-flow-section">
+            <div className="container">
+              <h2>✨ Your Generated Flow: {generatedFlow.routine_name}</h2>
+              
+              <div className="flow-results">
+                <div className="flow-description">
+                  <h3>Flow Description</h3>
+                  <div className="description-content">
+                    {generatedFlow.flow_description.split('\n').map((paragraph: string, index: number) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flow-sequence">
+                  <h3>Flow Sequence</h3>
+                  <div className="sequence-list">
+                    {generatedFlow.flow_sequence && generatedFlow.flow_sequence.length > 0 ? (
+                      generatedFlow.flow_sequence.map((pose: any, index: number) => (
+                        <div key={index} className="pose-item">
+                          <span className="pose-number">{index + 1}</span>
+                          <span className="pose-name">{pose.pose}</span>
+                          <span className="pose-duration">{pose.duration}s</span>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="no-sequence">Sequence data will be available in future updates</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flow-actions">
+                <button className="btn btn-primary" onClick={() => window.print()}>
+                  Save Flow (TBD)
+                </button>
+                <button className="btn btn-secondary" onClick={() => setGeneratedFlow(null)}>
+                  🔄 Generate New Flow
+                </button>
+                <button className="btn btn-tertiary" onClick={() => setGeneratedFlow(null)}>
+                  Step through flow(TBD)
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
