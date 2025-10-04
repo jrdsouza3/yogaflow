@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import './Auth.css';
 
 const Login: React.FC = () => {
@@ -9,6 +10,9 @@ const Login: React.FC = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -23,16 +27,16 @@ const Login: React.FC = () => {
     setError('');
 
     try {
-      // TODO: Implement actual login logic
-      console.log('Login attempt:', formData);
+      const result = await login(formData.email, formData.password);
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For now, just redirect to home
-      window.location.href = '/';
+      if (result.success) {
+        // Redirect to home page on successful login
+        navigate('/');
+      } else {
+        setError(result.message);
+      }
     } catch (err) {
-      setError('Login failed. Please check your credentials.');
+      setError('Login failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
