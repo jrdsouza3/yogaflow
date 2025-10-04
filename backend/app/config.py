@@ -7,7 +7,10 @@ class Config:
     """Base configuration class"""
     SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
     DEBUG = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
-    CORS_ORIGINS = os.getenv('CORS_ORIGINS', 'http://localhost:3000').split(',')
+    
+    # CORS Configuration - handles multiple environments
+    _cors_origins = os.getenv('CORS_ORIGINS', 'http://localhost:3000,http://localhost:5173')
+    CORS_ORIGINS = [origin.strip() for origin in _cors_origins.split(',') if origin.strip()]
     
     # Database configuration
     DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///yogaflow.db')

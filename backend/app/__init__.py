@@ -1,21 +1,18 @@
 from flask import Flask
 from flask_cors import CORS
 import os
-from dotenv import load_dotenv
+from .config import config
 
-# Load environment variables
-load_dotenv()
-
-def create_app():
+def create_app(config_name=None):
     """Application factory pattern"""
     app = Flask(__name__)
     
-    # Configure CORS
-    CORS(app, origins=os.getenv('CORS_ORIGINS', 'http://localhost:3000').split(','))
+    # Load configuration
+    config_name = config_name or os.getenv('FLASK_ENV', 'development')
+    app.config.from_object(config[config_name])
     
-    # Basic configuration
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
-    app.config['DEBUG'] = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
+    # Configure CORS
+    CORS(app, origins=app.config['CORS_ORIGINS'])
     
     # Register blueprints
     from .routes.flow import flow_bp
