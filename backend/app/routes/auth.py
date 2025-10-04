@@ -194,12 +194,33 @@ def login():
 @auth_bp.route('/auth/test', methods=['GET'])
 def auth_test():
     """Test endpoint for auth routes"""
-    return jsonify({
-        'message': 'Auth endpoints are working! 🔐',
-        'status': 'success',
-        'endpoint': '/api/auth/test',
-        'available_endpoints': {
-            'signup': 'POST /api/auth/signup',
-            'login': 'POST /api/auth/login'
+    try:
+        # Test if environment variables are available
+        from ..config import config
+        import os
+        
+        config_obj = config[os.getenv('FLASK_ENV', 'production')]
+        
+        env_status = {
+            'SECRET_KEY': '✅' if config_obj.SECRET_KEY else '❌',
+            'SUPABASE_URL': '✅' if config_obj.SUPABASE_URL else '❌',
+            'SUPABASE_ANON_KEY': '✅' if config_obj.SUPABASE_ANON_KEY else '❌',
+            'SUPABASE_SERVICE_ROLE_KEY': '✅' if config_obj.SUPABASE_SERVICE_ROLE_KEY else '❌',
         }
-    })
+        
+        return jsonify({
+            'message': 'Auth endpoints are working! 🔐',
+            'status': 'success',
+            'endpoint': '/api/auth/test',
+            'environment_variables': env_status,
+            'available_endpoints': {
+                'signup': 'POST /api/auth/signup',
+                'login': 'POST /api/auth/login'
+            }
+        })
+    except Exception as e:
+        return jsonify({
+            'message': 'Auth endpoint error',
+            'error': str(e),
+            'status': 'error'
+        }), 500

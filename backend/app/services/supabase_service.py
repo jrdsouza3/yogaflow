@@ -11,12 +11,20 @@ class SupabaseService:
         self.supabase_key = os.getenv('SUPABASE_ANON_KEY')
         
         if not self.supabase_url or not self.supabase_key:
-            raise ValueError("Supabase URL and Key must be set in environment variables")
-        
-        self.client: Client = create_client(self.supabase_url, self.supabase_key)
+            print("⚠️  WARNING: Supabase URL and Key not set. Auth features will not work.")
+            self.client = None
+        else:
+            self.client: Client = create_client(self.supabase_url, self.supabase_key)
     
     def create_user(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create a new user in the database"""
+        if not self.client:
+            return {
+                'success': False,
+                'message': 'Supabase not configured',
+                'error': 'Database connection not available'
+            }
+        
         try:
             # Insert user data into the users table
             result = self.client.table('users').insert(user_data).execute()
@@ -42,6 +50,9 @@ class SupabaseService:
     
     def get_user_by_email(self, email: str) -> Optional[Dict[str, Any]]:
         """Get user by email address"""
+        if not self.client:
+            return None
+        
         try:
             result = self.client.table('users').select('*').eq('email', email).execute()
             
@@ -54,6 +65,9 @@ class SupabaseService:
     
     def get_user_by_id(self, user_id: str) -> Optional[Dict[str, Any]]:
         """Get user by ID"""
+        if not self.client:
+            return None
+        
         try:
             result = self.client.table('users').select('*').eq('id', user_id).execute()
             
@@ -66,6 +80,13 @@ class SupabaseService:
     
     def update_user(self, user_id: str, update_data: Dict[str, Any]) -> Dict[str, Any]:
         """Update user information"""
+        if not self.client:
+            return {
+                'success': False,
+                'message': 'Supabase not configured',
+                'error': 'Database connection not available'
+            }
+        
         try:
             result = self.client.table('users').update(update_data).eq('id', user_id).execute()
             

@@ -7,7 +7,11 @@ class JWTService:
     """Service for handling JWT token operations"""
     
     def __init__(self):
-        self.secret_key = os.getenv('JWT_SECRET_KEY', 'your-jwt-secret-key-change-in-production')
+        from ..config import config
+        import os
+        
+        config_obj = config[os.getenv('FLASK_ENV', 'production')]
+        self.secret_key = config_obj.JWT_SECRET_KEY
         self.algorithm = 'HS256'
         self.access_token_expire_minutes = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES', 60))  # 1 hour default
     

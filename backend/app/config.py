@@ -6,6 +6,7 @@ load_dotenv()
 class Config:
     """Base configuration class"""
     SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'dev-jwt-secret-key-change-in-production')
     DEBUG = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
     
     # CORS Configuration - handles multiple environments

@@ -4,11 +4,19 @@ WSGI entry point for production deployment
 """
 
 import os
+import sys
 from app import create_app
 
-# Create the Flask application
-app = create_app(os.getenv('FLASK_ENV', 'production'))
+try:
+    # Create the Flask application
+    app = create_app(os.getenv('FLASK_ENV', 'production'))
+    print("✅ Flask app created successfully")
+except Exception as e:
+    print(f"❌ Error creating Flask app: {e}")
+    sys.exit(1)
 
 if __name__ == '__main__':
     # This is for development only
-    app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
+    port = int(os.getenv('PORT', 5000))
+    print(f"🚀 Starting Flask app on port {port}")
+    app.run(host='0.0.0.0', port=port)
