@@ -15,7 +15,7 @@ class LLMService:
         
         # Create the prompt
         prompt = self._create_flow_prompt(flow_request)
-        print(prompt)
+        #print(prompt)
         try:
             # Call OpenAI API
             response = self.client.chat.completions.create(
