@@ -66,7 +66,7 @@ class LLMService:
 Create a detailed yoga flow with the following specifications:
 
 **Flow Name:** {routine_name}
-**Duration:** {duration} minutes
+**Duration:** {duration} minutes - IT IS VERY IMPORTANT TO FOLLOW THE DURATION OF THE FLOW. DO NOT RETURN A FLOW WHERE THE SUM OF THE TIMES IS SIGNIFICANTLY DIFFERENT THAN THE DURATION.
 **User Description:** {description}
 **Desired Poses:** {desired_poses if desired_poses else 'No specific poses requested'}
 
@@ -83,12 +83,12 @@ Please provide your response in the following EXACT format:
 ]
 
 Guidelines:
-- Create a balanced sequence appropriate for the duration
+- Create a balanced sequence appropriate for the duration. - IT IS VERY IMPORTANT TO FOLLOW THE DURATION OF THE FLOW. DO NOT RETURN A FLOW WHERE THE SUM OF THE TIMES IS SIGNIFICANTLY DIFFERENT THAN THE DURATION.
 - Include warm-up poses at the beginning
 - Progress from easier to more challenging poses
 - Include cool-down poses at the end
 - Each pose should have a duration in seconds
-- Total duration should be approximately {int(duration) * 60} seconds
+- Total duration should be approximately {int(duration) * 60} seconds - IT IS VERY IMPORTANT TO FOLLOW THE DURATION OF THE FLOW. DO NOT RETURN A FLOW WHERE THE SUM OF THE TIMES IS SIGNIFICANTLY DIFFERENT THAN THE DURATION.
 - Use proper yoga pose names (English or Sanskrit)
 - If specific poses are requested, include them in appropriate places
 - Consider the user's description for the flow's focus and intensity
