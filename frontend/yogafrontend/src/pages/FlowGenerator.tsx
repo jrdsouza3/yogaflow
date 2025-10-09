@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import apiService from '../services/api';
 import './FlowGenerator.css';
 
@@ -19,6 +20,7 @@ const FlowGenerator: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedFlow, setGeneratedFlow] = useState<any>(null);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -209,8 +211,12 @@ const FlowGenerator: React.FC = () => {
                 <button className="btn btn-secondary" onClick={() => setGeneratedFlow(null)}>
                   🔄 Generate New Flow
                 </button>
-                <button className="btn btn-tertiary" onClick={() => setGeneratedFlow(null)}>
-                  Step through flow(TBD)
+                <button
+                  className="btn btn-tertiary"
+                  onClick={() => generatedFlow && navigate('/step-through', { state: { flow: generatedFlow } })}
+                  disabled={!generatedFlow}
+                >
+                  ▶ Step Through Flow
                 </button>
               </div>
             </div>

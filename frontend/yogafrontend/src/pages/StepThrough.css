@@ -1,0 +1,181 @@
+.step-through {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem 1rem;
+}
+
+.step-through .container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.step-through .step-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.step-through .step-header h1 {
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.step-through .player-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.step-through .pose-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.step-through .pose-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.step-through .pose-index {
+  background: #667eea;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.step-through .pose-count {
+  color: #4a5568;
+}
+
+.step-through .pose-name {
+  flex: 1;
+  text-align: right;
+  color: #2d3748;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.step-through .timer-display {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #2d3748;
+  margin: 1.5rem 0;
+}
+
+.step-through .pose-description {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #2d3748;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 0.5rem 0 1rem;
+  line-height: 1.5;
+}
+
+.step-through .controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.step-through .btn {
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.step-through .btn-primary {
+  background: #667eea;
+  color: white;
+}
+
+.step-through .btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.step-through .btn-secondary {
+  background: #edf2f7;
+  color: #2d3748;
+}
+
+.step-through .btn-tertiary {
+  background: #f6e05e;
+  color: #744210;
+}
+
+.step-through .btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.step-through .up-next {
+  margin-top: 1.5rem;
+}
+
+.step-through .up-next h3 {
+  color: #2d3748;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.step-through .next-list {
+  background: white;
+  border-radius: 12px;
+  padding: 0.75rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.step-through .next-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.25rem;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.step-through .next-item:last-child {
+  border-bottom: none;
+}
+
+.step-through .next-item.clickable {
+  cursor: pointer;
+}
+
+.step-through .next-item.clickable:hover {
+  background: #f8fafc;
+}
+
+.step-through .next-name {
+  color: #2d3748;
+}
+
+.step-through .next-duration {
+  color: #667eea;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .step-through .pose-name {
+    font-size: 1.2rem;
+  }
+  .step-through .timer-display {
+    font-size: 2.5rem;
+  }
+}
+
+
